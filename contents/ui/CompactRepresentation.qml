@@ -50,6 +50,7 @@ Item {
     }
     RowLayout {
         id: initial
+        anchors.centerIn: parent
         implicitHeight: weatherData.dataAvailable
             ? Math.max(icon.height, columntemandweathertext.implicitHeight)
             : icon.height
@@ -116,7 +117,8 @@ Item {
     }
     ColumnLayout {
         id: wrapper_vertical
-        width: root.width
+        anchors.centerIn: parent
+        implicitWidth: Math.max(icon_vertical.width, temOfCo_vertical.visible ? temOfCo_vertical.width : 0)
         implicitHeight: icon_vertical.height + (temOfCo_vertical.visible ? (spacing + temOfCo_vertical.implicitHeight) : 0)
         spacing: 2
         visible: isVertical
