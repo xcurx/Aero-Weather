@@ -6,9 +6,21 @@
 # https://invent.kde.org/sysadmin/l10n-scripty/-/blob/master/extract-messages.sh
 
 DIR=`cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd`
-plasmoidName=`kreadconfig5 --file="$DIR/../metadata.desktop" --group="Desktop Entry" --key="X-KDE-PluginInfo-Name"`
+kreadconfig_cmd=""
+if [ -x "$(command -v kreadconfig6)" ]; then
+	kreadconfig_cmd="kreadconfig6"
+elif [ -x "$(command -v kreadconfig)" ]; then
+	kreadconfig_cmd="kreadconfig"
+fi
+
+if [ -z "$kreadconfig_cmd" ]; then
+	echo "[merge] Error: Could not find kreadconfig6/kreadconfig (Plasma 6 required)."
+	exit 1
+fi
+
+plasmoidName=`$kreadconfig_cmd --file="$DIR/../metadata.desktop" --group="Desktop Entry" --key="X-KDE-PluginInfo-Name"`
 widgetName="${plasmoidName##*.}" # Strip namespace
-website=`kreadconfig5 --file="$DIR/../metadata.desktop" --group="Desktop Entry" --key="X-KDE-PluginInfo-Website"`
+website=`$kreadconfig_cmd --file="$DIR/../metadata.desktop" --group="Desktop Entry" --key="X-KDE-PluginInfo-Website"`
 bugAddress="$website"
 packageRoot=".." # Root of translatable sources
 projectName="plasma_applet_${plasmoidName}" # project name

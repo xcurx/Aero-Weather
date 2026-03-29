@@ -7,14 +7,35 @@ Item {
 
     property int deepNight: 1230
     property int day: 360
-    property bool isday: true
+    property bool apiDataReceived: false
+    property bool apiIsDay: true
+
+    readonly property bool isday: apiDataReceived ? apiIsDay : systemIsDay
+
+    property bool systemIsDay: {
+        var hour = new Date().getHours()
+        return hour >= 6 && hour < 18
+    }
+
     property string apiUrlFinal: "https://api.sunrise-sunset.org/json?lat=" + latitud + "&lng=" + longitud + "&formatted=0"
 
     signal update
 
+    // reevaluate system clock fallback every minute
+    Timer {
+        id: clockFallbackTimer
+        interval: 60000
+        running: true
+        repeat: true
+        onTriggered: {
+            var hour = new Date().getHours()
+            systemIsDay = hour >= 6 && hour < 18
+        }
+    }
+
     Timer {
         id: delayFetchTimer
-        interval: 50 // 50ms de retardo
+        interval: 50
         repeat: false
         onTriggered: {
             if (fullCoordinates) {
@@ -60,24 +81,28 @@ Item {
                     deepNight = minutesOfDayISO8601(response.results.astronomical_twilight_end);
                     day = minutesOfDayISO8601(response.results.sunrise);
                     var AdjustedNightSchedule = deepNight < day ? deepNight + 1440 : deepNight
-                    isday = minutesDay > day && minutesDay < AdjustedNightSchedule
-                    console.log("isDay:", isday)
+                    apiIsDay = minutesDay > day && minutesDay < AdjustedNightSchedule
+                    apiDataReceived = true
+                    console.log("isDay (API):", apiIsDay)
                 }
             }
         };
         xhr.send();
     }
 
-    // Al cambiar latitud o longitud, se activa un pequeño retardo antes de evaluar y llamar a fetch
     onLatitudChanged: delayFetchTimer.restart()
     onLongitudChanged: delayFetchTimer.restart()
 
-    // También puedes seguir usando "update" externamente
     onUpdate: {
         if (fullCoordinates) {
             fetchSunData(apiUrlFinal)
         } else {
             retryUpdate.start()
         }
+    }
+
+    Component.onCompleted: {
+         var hour = new Date().getHours()
+         systemIsDay = hour >= 6 && hour < 18
     }
 }

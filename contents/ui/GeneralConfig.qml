@@ -1,5 +1,6 @@
 import QtQuick
 import QtQuick.Controls
+import QtQuick.Dialogs
 import org.kde.kirigami as Kirigami
 import org.kde.plasma.core 2.0 as PlasmaCore
 
@@ -25,9 +26,16 @@ Item {
     property alias cfg_useCoordinatesIp: autamateCoorde.checked
     property alias cfg_boldfonts: boldfont.checked
     property alias cfg_textweather: textweather.checked
+    property alias cfg_useCustomFontColor: useCustomFontColor.checked
+    property string cfg_fontColor
 
     Kirigami.FormLayout {
-        width: parent.width
+        anchors {
+            left: parent.left
+            right: parent.right
+            top: parent.top
+            margins: Kirigami.Units.largeSpacing
+        }
 
         ComboBox {
             textRole: "text"
@@ -43,24 +51,33 @@ Item {
         }
         CheckBox {
             id: textweather
-            Kirigami.FormData.label: i18n('weather conditions text on panel:')
+            Kirigami.FormData.label: i18n('Show weather text on panel:')
         }
 
+        Kirigami.Separator {
+            Kirigami.FormData.isSection: true
+            Kirigami.FormData.label: i18n("Location")
+        }
         CheckBox {
             id: autamateCoorde
-            Kirigami.FormData.label: i18n('Use IP location')
+            Kirigami.FormData.label: i18n('Use IP location:')
         }
         TextField {
             id: latitude
             visible: !autamateCoorde.checked
             Kirigami.FormData.label: i18n("Latitude:")
-            width: 200
+            implicitWidth: 200
         }
         TextField {
             id: longitude
             visible: !autamateCoorde.checked
             Kirigami.FormData.label: i18n("Longitude:")
-            width: 200
+            implicitWidth: 200
+        }
+
+        Kirigami.Separator {
+            Kirigami.FormData.isSection: true
+            Kirigami.FormData.label: i18n("Font Appearance")
         }
         CheckBox {
             id: boldfont
@@ -87,6 +104,32 @@ Item {
             ]
             onActivated: fontsizeValue.value = currentValue
             Component.onCompleted: currentIndex = indexOfValue(fontsizeValue.value)
+        }
+        CheckBox {
+            id: useCustomFontColor
+            Kirigami.FormData.label: i18n('Custom font color:')
+        }
+        Button {
+            id: fontColorButton
+            visible: useCustomFontColor.checked
+            Kirigami.FormData.label: i18n('Font Color:')
+            implicitWidth: 100
+            implicitHeight: 30
+            contentItem: Rectangle {
+                color: cfg_fontColor
+                radius: 4
+                border.color: Qt.darker(cfg_fontColor, 1.2)
+                border.width: 1
+            }
+            onClicked: colorDialog.open()
+        }
+        ColorDialog {
+            id: colorDialog
+            title: i18n("Choose Font Color")
+            selectedColor: cfg_fontColor
+            onAccepted: {
+                cfg_fontColor = selectedColor
+            }
         }
     }
 

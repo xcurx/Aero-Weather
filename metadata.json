@@ -1,14 +1,19 @@
 {
+    "KPackageStructure": "Plasma/Applet",
     "KPlugin": {
         "Authors": [
             {
                 "Email": "adolfo@librepixels.com",
                 "Name": "zayronxio"
+            },
+            {
+                "Email": "suj5al78@gmail.com",
+                "Name": "xcurx"
             }
         ],
-        "Name": "Minimal chaac weather",
-        "Id": "Minimal.chaac.weather",
-        "Description": "widget showing the current weather status.",
+        "Name": "Aero Weather",
+        "Id": "Aero.Weather",
+        "Description": "Widget showing the current weather status.",
         "Category": "Utilities",
         "Icon": "weather",
         "EnabledByDefault": true,
@@ -17,8 +22,9 @@
             "Plasma/Applet"
         ],
         "Version": "2.7",
-        "Website": "https://github.com/zayronxio/Chaac.Minimal.Weather/"
+        "Website": "https://github.com/xcurx/aero"
     },
+    "X-Plasma-API": "declarativeappletscript",
     "X-Plasma-API-Minimum-Version": "6.0",
     "X-Plasma-MainScript": "ui/main.qml"
 }

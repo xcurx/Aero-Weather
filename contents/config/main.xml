@@ -27,6 +27,12 @@
     <entry name="textweather" type="bool">
       <default>true</default>
       </entry>
+    <entry name="useCustomFontColor" type="bool">
+		<default>false</default>
+	</entry>
+    <entry name="fontColor" type="string">
+		<default>#ffffff</default>
+	</entry>
   </group>
 
 </kcfg>

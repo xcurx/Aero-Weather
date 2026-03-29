@@ -29,9 +29,14 @@ function obtenerDatosClimaticos(latitud, longitud, fechaInicio, hours, callback)
                  callback(full);
              } else {
                  console.error(`Error en la solicitud: weathergeneral ${req.status}`);
-                 //callback(`failed ${req.status}`)
+                 callback("error");
              }
          }
+     };
+
+     req.onerror = function () {
+         console.error("Network error fetching weather data");
+         callback("error");
      };
 
      req.send();

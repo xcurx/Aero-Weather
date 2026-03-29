@@ -1,6 +1,6 @@
 #!/bin/bash
 # Version 9
-# Requires plasmoidviewer v5.13.0
+# Requires Plasma 6 plasmoidviewer
 
 function checkIfLangInstalled {
 	if [ -x "$(command -v dpkg)" ]; then
@@ -175,7 +175,19 @@ echo "LANG=\"${l1}\""
 scriptDir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 packageDir="${scriptDir}/.."
 
-# Build local translations for plasmoidviewer
-sh "${scriptDir}/build"
+plasmoidviewerCmd=""
+if [ -x "$(command -v plasmoidviewer6)" ]; then
+	plasmoidviewerCmd="plasmoidviewer6"
+elif [ -x "$(command -v plasmoidviewer)" ]; then
+	plasmoidviewerCmd="plasmoidviewer"
+fi
 
-LANGUAGE="${lang}" LANG="${l1}" LC_TIME="${l1}" QML_DISABLE_DISK_CACHE=true plasmoidviewer -a "$packageDir" -l topedge -f horizontal -x 0 -y 0
+if [ -z "$plasmoidviewerCmd" ]; then
+	echo "Error: Could not find plasmoidviewer6/plasmoidviewer (Plasma 6 required)."
+	exit 1
+fi
+
+# Build local translations for plasmoidviewer
+sh "${scriptDir}/build.sh"
+
+LANGUAGE="${lang}" LANG="${l1}" LC_TIME="${l1}" QML_DISABLE_DISK_CACHE=true "$plasmoidviewerCmd" -a "$packageDir" -l topedge -f horizontal -x 0 -y 0

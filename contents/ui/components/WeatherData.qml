@@ -12,8 +12,13 @@ Item {
   signal dataChanged
 
   function obtener(texto, indice) {
-    var palabras = texto.split(/\s+/); // Divide el texto en palabras utilizando el espacio como separador
-    return palabras[indice - 1]; // El índice - 1 porque los índices comienzan desde 0 en JavaScript
+    if (typeof texto !== "string" || texto.length === 0) {
+      return "0";
+    }
+
+    var palabras = texto.trim().split(/\s+/);
+    var valor = palabras[indice - 1];
+    return (valor === undefined || valor === "") ? "0" : valor;
   }
 
   function fahrenheit(temp) {
@@ -26,6 +31,8 @@ Item {
 
   property bool dataLoadingSuccessful: false
   property bool timerStarted: false
+  property bool dataAvailable: false
+  property bool networkError: false
   property int retrysTimer: 0
   property string useCoordinatesIp: plasmoid.configuration.useCoordinatesIp
   property string latitudeC: plasmoid.configuration.latitudeC
@@ -98,7 +105,7 @@ Item {
 
   property string uvtext: Traduc.uvRadiationText(codeleng)
   property string windSpeedText: Traduc.windSpeedText(codeleng)
-  property int isDay: obtener(datosweather, 8)
+  readonly property bool isDay: determinateDay.isday
   property string city: ""
   readonly property string prefixIcon: determinateDay.isday ? "" : "-night"
 
@@ -168,16 +175,26 @@ Item {
 
   function getWeatherApi() {
     GetInfoApi.obtenerDatosClimaticos(latitude, longitud, day, currentTime, function(result) {
+      if (result === "error") {
+        networkError = true;
+        dataAvailable = false;
+        retry.start();
+        return;
+      }
       datosweather = result;
-      getForecastWeather()
-      retry.start()
+      networkError = false;
+      dataAvailable = true;
+      getForecastWeather();
+      retry.start();
     });
   }
 
   function getForecastWeather() {
     GetModelWeather.GetForecastWeather(latitude, longitud, day, therday, function(result) {
+      if (result === "error") {
+        return;
+      }
       forecastWeather = result;
-      //retry.start()
     });
   }
 
@@ -210,7 +227,7 @@ Item {
       96: "storm",
       99: "storm",
     };
-    var iconName = "weather-" + (wmocodes[x] || "unknown");
+    var iconName = "weather-" + (wmocodes[x] || "clear");
     var iconNamePresicion = iconName + prefixIcon
     return b === "preciso" ? iconNamePresicion : iconName;
   }

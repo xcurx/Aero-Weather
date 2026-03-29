@@ -18,9 +18,15 @@ function GetForecastWeather(latitud, longitud, fechaInicio, fechaFin, callback) 
                  console.log(`${full}`);
                  callback(full);
              } else {
-                 console.error(`Error en la solicitud: ${req.status}`);
+                 console.error(`Error en la solicitud: forecast ${req.status}`);
+                 callback("error");
              }
          }
+     };
+
+     req.onerror = function () {
+         console.error("Network error fetching forecast data");
+         callback("error");
      };
 
      req.send();

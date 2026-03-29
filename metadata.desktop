@@ -1,11 +1,13 @@
 [Desktop Entry]
-Name=Minimal chaac weather
+Name=Aero weather
 
 Type=Service
 Icon=configure
 X-KDE-ServiceTypes=Plasma/Applet
 
 X-Plasma-API=declarativeappletscript
+X-Plasma-API-Minimum-Version=6.0
 X-Plasma-MainScript=ui/main.qml
-X-KDE-PluginInfo-Name=Minimal.chaac.weather
+X-KDE-PluginInfo-Name=Aero.Weather
+X-KDE-PluginInfo-Website=https://github.com/xcurx/aero
 
