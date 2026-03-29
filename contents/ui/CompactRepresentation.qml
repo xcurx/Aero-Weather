@@ -10,10 +10,12 @@ import "components" as Components
 Item {
     id: iconAndTem
 
-    // minimum height for the widget to ensure it never collapses
-    readonly property int minimumWidgetHeight: activeweathershottext
-        ? Kirigami.Units.gridUnit * 5
-        : Kirigami.Units.gridUnit * 4
+    readonly property real minimumWidgetHeight: activeweathershottext
+        ? Kirigami.Units.gridUnit * 2.6
+        : Kirigami.Units.gridUnit * 2.2
+    readonly property real minimumWidgetWidth: isVertical
+        ? Kirigami.Units.gridUnit * 2.2
+        : Kirigami.Units.gridUnit * 2.6
 
     // calculate height with fallback to minimum height
     implicitHeight: isVertical
@@ -21,12 +23,12 @@ Item {
         : Math.max(initial.implicitHeight, minimumWidgetHeight)
 
     implicitWidth: isVertical
-        ? Math.max(wrapper_vertical.implicitWidth, minimumWidgetHeight)
-        : Math.max(initial.implicitWidth, minimumWidgetHeight)
+        ? Math.max(wrapper_vertical.implicitWidth, minimumWidgetWidth)
+        : Math.max(initial.implicitWidth, minimumWidgetWidth)
 
     Layout.preferredWidth: implicitWidth
     Layout.preferredHeight: implicitHeight
-    Layout.minimumWidth: implicitWidth
+    Layout.minimumWidth: minimumWidgetWidth
     Layout.minimumHeight: minimumWidgetHeight
 
     readonly property bool isVertical: Plasmoid.formFactor === PlasmaCore.Types.Vertical
@@ -48,6 +50,7 @@ Item {
 
         onClicked: root.expanded = !root.expanded
     }
+
     RowLayout {
         id: initial
         anchors.centerIn: parent
@@ -91,7 +94,7 @@ Item {
                     id: subtextGrados
                     height: parent.height
                     width: parent.width - textGrados.implicitWidth
-                    text: (root.temperatureUnit === "0") ? " °C " : " °F "
+                    text: (Number(root.temperatureUnit) === 0) ? " °C " : " °F "
                     horizontalAlignment: Text.AlignLeft
                     font.bold: boldfonts
                     font.pixelSize: fonssizes
@@ -149,7 +152,7 @@ Item {
             Label {
                 id: subtextGrados_vertical
                 height: parent.height
-                text: (root.temperatureUnit === "0") ? " °C" : " °F"
+                text: (Number(root.temperatureUnit) === 0) ? " °C" : " °F"
                 font.bold: boldfonts
                 font.pixelSize: fonssizes
                 color: fontColorResolved
