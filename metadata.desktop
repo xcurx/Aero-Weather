@@ -1,8 +1,8 @@
 [Desktop Entry]
-Name=Aero weather
+Name=Aero Weather
 
 Type=Service
-Icon=configure
+Icon=weather-few-clouds
 X-KDE-ServiceTypes=Plasma/Applet
 
 X-Plasma-API=declarativeappletscript

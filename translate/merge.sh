@@ -19,7 +19,10 @@ if [ -z "$kreadconfig_cmd" ]; then
 fi
 
 plasmoidName=`$kreadconfig_cmd --file="$DIR/../metadata.desktop" --group="Desktop Entry" --key="X-KDE-PluginInfo-Name"`
-widgetName="${plasmoidName##*.}" # Strip namespace
+widgetName=`$kreadconfig_cmd --file="$DIR/../metadata.desktop" --group="Desktop Entry" --key="Name"`
+if [ -z "$widgetName" ]; then
+	widgetName="$plasmoidName"
+fi
 website=`$kreadconfig_cmd --file="$DIR/../metadata.desktop" --group="Desktop Entry" --key="X-KDE-PluginInfo-Website"`
 bugAddress="$website"
 packageRoot=".." # Root of translatable sources

@@ -1,12 +1,12 @@
-# Translation of Minimal.Chaac in LANGUAGE
+# Translation of Aero Weather in LANGUAGE
 # Copyright (C) 2023
-# This file is distributed under the same license as the  Nori.Weather package.
+# This file is distributed under the same license as the  Aero.Weather package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Nori.Weather\n"
-"Report-Msgid-Bugs-To: https://store.kde.org/p/2179833/\n"
+"Project-Id-Version: Aero.Weather\n"
+"Report-Msgid-Bugs-To: https://github.com/xcurx/aero\n"
 "POT-Creation-Date: 2023-05-01 16:59-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"

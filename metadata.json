@@ -15,7 +15,7 @@
         "Id": "Aero.Weather",
         "Description": "Widget showing the current weather status.",
         "Category": "Utilities",
-        "Icon": "weather",
+        "Icon": "weather-few-clouds",
         "EnabledByDefault": true,
         "License": "GPL-3.0+",
         "ServiceTypes": [
