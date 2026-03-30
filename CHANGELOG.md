@@ -9,6 +9,7 @@ The format is based on Keep a Changelog, and this project follows Semantic Versi
 - First public release of Aero Weather as a Plasma 6 weather widget fork.
 - Desktop direct weather card mode as the default desktop presentation.
 - Custom font color option in widget settings.
+- User-facing loading/offline/error states with retry messaging during API fetch and network failures.
 - Translation and locale packaging workflow aligned with current metadata and plugin domain.
 - GPL-3.0 license text included in the repository.
 
