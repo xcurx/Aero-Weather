@@ -21,7 +21,7 @@
         "ServiceTypes": [
             "Plasma/Applet"
         ],
-        "Version": "2.7",
+        "Version": "1.0.0",
         "Website": "https://github.com/xcurx/aero"
     },
     "X-Plasma-API": "declarativeappletscript",
