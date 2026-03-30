@@ -24,4 +24,4 @@ The format is based on Keep a Changelog, and this project follows Semantic Versi
 - Forecast day label source stabilized to avoid undefined text assignments.
 - Legacy translation domain artifacts cleaned up to avoid stale locale collisions.
 
-[1.0.0]: https://github.com/xcurx/aero/releases/tag/v1.0.0
+[1.0.0]: https://github.com/xcurx/Aero-Weather/releases/tag/v1.0.0

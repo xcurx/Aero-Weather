@@ -22,7 +22,7 @@
             "Plasma/Applet"
         ],
         "Version": "1.0.0",
-        "Website": "https://github.com/xcurx/aero"
+        "Website": "https://github.com/xcurx/Aero-Weather"
     },
     "X-Plasma-API": "declarativeappletscript",
     "X-Plasma-API-Minimum-Version": "6.0",
